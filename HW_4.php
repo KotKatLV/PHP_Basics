@@ -72,3 +72,20 @@ echo 'Текущий месяц - ' . date($months[date('n')]) . '<br>';
 
 // 17. Найдите количество дней в текущем месяце. Скрипт должен работать независимо от месяца, в котором он запущен.
 echo 'Количество дней в текущем месяце = ' . date('t', mktime(0, 0, 0, date('n'))) . '<br>';
+
+// 18. Сделайте поле ввода, в которое пользователь вводит год (4 цифры), а скрипт определяет високосный ли год.
+ if(isset($_POST['submitLeapYearForm'])){
+    $userYear = htmlspecialchars($_POST['userYear']);
+    echo ($userYear % 4 === 0 && $userYear % 100 !== 0) || $userYear % 400 === 0 ? $userYear . ' - вискокосный год' : $userYear . ' не вискокосный год.' . '<br>';
+ }
+ else{
+     ?>
+         <form name="submitLeapYearForm" method="POST" action="">
+             <label>Введите год: <input name="userYear" type="text" maxlength="4"></label>
+             <input type="submit" name="submitLeapYearForm" value="Подтверждаю">
+         </form>
+     <?php
+ }
+
+// 19. Сделайте форму, которая спрашивает дату в формате '31.12.2025'. С помощью функций mktime и explode переведите
+// эту дату в формат timestamp. Узнайте день недели (словом) за введенную дату.
