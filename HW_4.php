@@ -187,7 +187,33 @@ echo 'До нового года осталось ' . floor((strtotime('31-12-' 
 
 // 27. Сделайте форму с одним полем ввода, в которое пользователь вводит год. Найдите все пятницы 13-е в этом году. Результат выведите в виде массива дат.
 
+function getAllFridays($year, $day){
+    $fridays = [];
+    $format = 'j F Y';
 
+    $startDate = new DateTime($year . '-01-01 Friday');
+    $endDate = new DateTime(++$year . '-01-01');
+    $int = new DateInterval('P7D');
+
+    foreach(new DatePeriod($startDate, $int, $endDate) as $d) {
+        if($d->format('d') == $day){
+            $fridays[] = $d->format($format);
+        }
+    }
+    return $fridays;
+}
+
+if(isset($_POST['fridaysSubmit'])){
+    var_dump(getAllFridays($_POST['userYear'], 13));
+}
+else{
+    ?>
+    <form name="fridays" method="POST" action="">
+        <label>Введите год: <input name="userYear" type="text" maxlength="4" minlength="4"></label>
+        <input type="submit" name="fridaysSubmit" value="Найти все пятницы 13-го.">
+    </form>
+    <?php
+}
 
 // 28. Узнайте какой день недели был 100 дней назад.
 echo $week[date('w' , strtotime('now' . ' - 100 days'))] . ' был 100 дней назад' . '<br>';
